@@ -9,9 +9,9 @@ namespace ConsoleApp3
         {
             int height = 21;
             int width = 41;
-            int[] xSnake = new int[800]; 
+            int[] xSnake = new int[800];
             xSnake[0] = 3;
-            int[] ySnake = new int[800]; 
+            int[] ySnake = new int[800];
             ySnake[0] = 19;
             int xApple;
             int yApple;
@@ -24,7 +24,6 @@ namespace ConsoleApp3
             Random rand = new Random();
 
             int line = 5;
-           // int level;
             ConsoleKey alsoKey;
 
             Console.SetCursorPosition(5, 3);
@@ -61,51 +60,36 @@ namespace ConsoleApp3
             Console.Clear();
             Console.CursorVisible = false;
             //build a board
-            
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             for (int i = 1; i < width; i++)
             {
-                Console.SetCursorPosition(i, 1);
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.Write("#");
-                Console.SetCursorPosition(i, (height - 1));
-                Console.Write("#");
+                Drawings(i, 1, "#");
+                Drawings(i, (height - 1), "#");
             }
             for (int i = 1; i < height; i++)
             {
-                Console.SetCursorPosition(1, i);
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.Write("#");
-                Console.SetCursorPosition((width - 1), i);
-                Console.Write("#");
+                Drawings(1, i, "#");
+                Drawings((width - 1), i, "#");
             }
 
-            if (line == 6||line==8)//hole
+            if (line == 6 || line == 8)//hole
             {
                 for (int i = width / 3; i < (width / 3) * 2; i++)
                 {
-                    Console.SetCursorPosition(i, height / 3);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write("#");
-                    Console.SetCursorPosition(i, (height / 3) * 2);
-                    Console.Write("#");
+                    Drawings(i, height / 3, "#");
+                    Drawings(i, (height / 3) * 2, "#");
                 }
                 if (line == 8)
                 {
                     for (int i = ((height / 4) * 2) + 2; i < ((height / 4) * 3) + 2; i++)
                     {
-                        Console.SetCursorPosition((width / 3) - 3, i);
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.Write("#");
-                        Console.SetCursorPosition(((width / 3) * 2) + 3, i);
-                        Console.Write("#");
+                        Drawings((width / 3) - 3, i, "#");
+                        Drawings(((width / 3) * 2) + 3, i, "#");
                     }
                     for (int i = ((height / 4) * 2) - 5; i < ((height / 4) * 3) - 5; i++)
                     {
-                        Console.SetCursorPosition((width / 3) - 3, i);
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.Write("#");
-                        Console.SetCursorPosition(((width / 3) * 2) + 3, i);
-                        Console.Write("#");
+                        Drawings((width / 3) - 3, i, "#");
+                        Drawings(((width / 3) * 2) + 3, i, "#");
                     }
                 }
             }
@@ -113,27 +97,20 @@ namespace ConsoleApp3
             {
                 for (int i = 1; i < (width / 2) - 1; i++)
                 {
-                    Console.SetCursorPosition(i, height / 3);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write("#");
-                    Console.SetCursorPosition(width - i, (height / 3) * 2);
-                    Console.Write("#");
+                    Drawings(i, height / 3, "#");
+                    Drawings(width - i, (height / 3) * 2, "#");
                 }
                 for (int i = 1; i < (height / 2) - 2; i++)
                 {
-                    Console.SetCursorPosition((width / 3) * 2, i);
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.Write("#");
-                    Console.SetCursorPosition((width / 3), (height - i));
-                    Console.Write("#");
+                    Drawings((width / 3) * 2, i, "#");
+                    Drawings((width / 3), (height - i), "#");
                 }
             }
-            
+
 
             //making a snake
-            Console.SetCursorPosition(xSnake[0], ySnake[0]);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("O");
+            Drawings(xSnake[0], ySnake[0], "O");
 
             //making an apple 
             bool vso1;
@@ -142,14 +119,12 @@ namespace ConsoleApp3
                 xApple = rand.Next(2, (width - 2));
                 yApple = rand.Next(2, (height - 2));
                 CheckingBoundaries(line, xApple, yApple, out vso1);
-                Console.SetCursorPosition(xApple, yApple);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("o");
             } while (!vso1);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Drawings(xApple, yApple, "o");
 
 
             ConsoleKey key = Console.ReadKey(true).Key;
-            
             do
             {
                 Console.SetCursorPosition(width + 5, 1);
@@ -158,56 +133,47 @@ namespace ConsoleApp3
                 Console.Write("Speed: " + gameSpeed);
 
                 //movings
+                Console.SetCursorPosition(xSnake[0], ySnake[0]);
+                Console.Write(" ");
                 switch (key)
                 {
                     case ConsoleKey.W:
-                        Console.SetCursorPosition(xSnake[0], ySnake[0]);
-                        Console.Write(" ");
                         ySnake[0]--;
                         break;
                     case ConsoleKey.S:
-                        Console.SetCursorPosition(xSnake[0], ySnake[0]);
-                        Console.Write(" ");
                         ySnake[0]++;
                         break;
                     case ConsoleKey.A:
-                        Console.SetCursorPosition(xSnake[0], ySnake[0]);
-                        Console.Write(" ");
                         xSnake[0]--;
                         break;
                     case ConsoleKey.D:
-                        Console.SetCursorPosition(xSnake[0], ySnake[0]);
-                        Console.Write(" ");
                         xSnake[0]++;
                         break;
-                    
+
                 }
 
-                // кусь
+                // bite
                 for (int i = 1; i <= numOfApples; i++)
                 {
                     if (xSnake[0] == xSnake[i] && ySnake[0] == ySnake[i])
                     {
                         alive = false;
-                        Console.SetCursorPosition(3, (height / 2));
-                        Console.WriteLine("Змейка себя кусьнула. Змейке больно.");
+                        Console.SetCursorPosition(10, (height / 2));
+                        Console.WriteLine("The snake bit itself.");
                         Console.SetCursorPosition(0, (height + 2));
-                             
                     }
                 }
 
                 //snake
                 if (alive)
                 {
-                    Console.SetCursorPosition(xSnake[0], ySnake[0]);
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("O");
+                    Drawings(xSnake[0], ySnake[0], "O");
 
                     for (int i = 1; i < numOfApples + 1; i++)
                     {
-                        Console.SetCursorPosition(xSnake[i], ySnake[i]);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("O");
+                        Drawings(xSnake[i], ySnake[i], "O");
                     }
                     Console.SetCursorPosition(xSnake[numOfApples + 1], ySnake[numOfApples + 1]);
                     Console.WriteLine(" ");
@@ -218,7 +184,6 @@ namespace ConsoleApp3
                     }
 
                     //boundaries and apple
-
                     CheckingBoundaries(line, xSnake[0], ySnake[0], out alive);
                     if (!alive)
                     {
@@ -226,7 +191,6 @@ namespace ConsoleApp3
                         Console.WriteLine("The snake reached a boundary");
                         Console.SetCursorPosition(0, (height + 3));
                     }
-
 
 
                     if (xSnake[0] == xApple && ySnake[0] == yApple)
@@ -252,10 +216,9 @@ namespace ConsoleApp3
                                 if (xApple != xSnake[i] && yApple != ySnake[i]) { vso = true; }
                             }
 
-                        } while (!vso && !vso2);
-                        Console.SetCursorPosition(xApple, yApple);
+                        } while (!vso || !vso2);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("o");
+                        Drawings(xApple, yApple, "o");
                         appleEaten = false;
                     }
 
@@ -268,6 +231,11 @@ namespace ConsoleApp3
             Thread.Sleep(500);
             Environment.Exit(0);
         }
+        static void Drawings(int x, int y, string symbol)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(symbol);
+        }
         static void CheckingBoundaries(int line, int xPossition, int yPossition, out bool possition, int height = 21, int width = 41)
         {
             if (line == 5 || line == 6 || line == 7 || line == 8)
@@ -277,19 +245,19 @@ namespace ConsoleApp3
                 if (line == 6 || line == 8)
                 {
                     if (((yPossition == height / 3) && (xPossition >= width / 3 && xPossition < (width / 3) * 2)) || ((yPossition == (height / 3) * 2)) && (xPossition >= width / 3 && xPossition < (width / 3) * 2)) { possition = false; }
-                
+
                     if (line == 8)
                     {
                         if ((xPossition == (width / 3) - 3 || xPossition == ((width / 3) * 2) + 3) && (((yPossition >= ((height / 4) * 2) - 5) && (yPossition < ((height / 4) * 3) - 5)) || ((yPossition >= ((height / 4) * 2) + 2) && yPossition < ((height / 4) * 3) + 2)))
                         {
                             possition = false;
-                        } 
+                        }
                     }
-   
+
                 }
                 if (line == 7)
                 {
-                    if ((xPossition < ((width / 2) - 1) && yPossition == height / 3) || (xPossition > ((width - (width / 2)) + 3) && yPossition == (height / 3) * 2) || (xPossition == ((width / 3) * 2) && yPossition < ((height / 2) - 2)) || (xPossition == (width / 3) && yPossition > (height - (height / 2)) + 3 ))
+                    if ((xPossition < ((width / 2) - 1) && yPossition == height / 3) || (xPossition > ((width - (width / 2)) + 3) && yPossition == (height / 3) * 2) || (xPossition == ((width / 3) * 2) && yPossition < ((height / 2) - 2)) || (xPossition == (width / 3) && yPossition > (height - (height / 2)) + 3))
                     {
                         possition = false;
                     }
@@ -298,6 +266,4 @@ namespace ConsoleApp3
             else possition = true;
         }
     }
-
 }
-
